@@ -1,0 +1,24 @@
+{
+  "name": "mongo-db-product-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nadeem222/Mongo-db-Product-store.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nadeem222/Mongo-db-Product-store/issues"
+  },
+  "homepage": "https://github.com/Nadeem222/Mongo-db-Product-store#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
