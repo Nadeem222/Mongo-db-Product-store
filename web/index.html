@@ -15,24 +15,6 @@
     <div id="result"></div>
 
 
-    <script>
-
-        let getwaether = () => {
-            let cityName = document.querySelector("#cityName").value;
-            axios.get(`https://abcapp.cyclic.com`)
-            .then(function(response) {
-                console.log('response is sucessfull')
-                console.log(response.data);
-
-                document.querySelector('#result').innerHTML=
-                `<h1> ${response.data.name}</h1>
-                <h3> ${response.data.main.temp}</h3>`
-            })
-
-            .catch(function (error) {
-                console.log(error);
-            })
-        }
-    </script>
+    
 </body>
 </html>

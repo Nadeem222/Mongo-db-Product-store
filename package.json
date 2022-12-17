@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Nadeem222/Mongo-db-Product-store#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0"
   }
 }
