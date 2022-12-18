@@ -46,7 +46,7 @@ app.post("/product", () => {
     name: body.name,
     price: body.price,
     category: body.category,
-    description : body.descriptionk
+    description : body.description
 
   },
       (err,saved) => {
