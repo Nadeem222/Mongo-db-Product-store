@@ -13,10 +13,28 @@
             margin: 10px;
             border-radius: 15px;
         }
+        .product-form{
+            display: flex;
+            text-align: right;
+            justify-content: space-between;
+        }
+        .product-form input{
+            border-radius: 2px;
+            border: 1px solid red;
+        }
+        .product-form button{
+            background: #ff528b;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
+
 </head>
 
 <body onload="getAllProducts()">
+    <div class="product-form">
     <h1> Mongo DB Product Store: </h1>
 
     <form onsubmit="addProduct(); return false">
@@ -33,6 +51,7 @@
         <button type="submit">Add Product</button>
 
     </form>
+</div>
     <div id="result"></div>
 
     <div id="productList" class="productList"></div>
