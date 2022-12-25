@@ -5,11 +5,11 @@ import mongoose from 'mongoose';
 import { stringify } from 'querystring';
 
 let productSchema = new mongoose.Schema({
-  name: {type: String, required: true},
+  name: { type: String, required: true },
   price: Number,
   category: String,
   description: String,
-  createdOn: {type: Date, default:Date.now}
+  createdOn: { type: Date, default: Date.now }
 });
 const productModel = mongoose.model('products', productSchema);
 
@@ -24,10 +24,10 @@ app.use(express.json())
 
 const port = process.env.PORT || 5001;
 
-app.post("/product", () => {
+app.post("/product", (req, res) => {
 
   const body = req.body;
-  if(
+  if (
     !body.name ||
     !body.price ||
     !body.category ||
@@ -42,40 +42,41 @@ app.post("/product", () => {
     }`)
     return;
   }
-   newProduct = productModel.create({
+  productModel.create({
     name: body.name,
     price: body.price,
     category: body.category,
-    description : body.description
+    description: body.description
 
   },
-      (err,saved) => {
-        if(!err) {
-          console.log(saved);
+    (err, saved) => {
+      if (!err) {
+        console.log(saved);
 
-          res.send({
-            message: "your product is saved"
-          })
-        }else{
-          res.status(500).send({
-            message: "server error"
-          })
-        }
-      })
+        res.send({
+          message: "your product is saved"
+        })
+      } else {
+        console.log(err);
+        res.status(500).send({
+          message: "server error"
+        })
+      }
+    })
 
 })
 
 app.get('/products', (req, res) => {
 
-  productModel.find({}, (err , data)=> {
-    if(!err) {
+  productModel.find({}, (err, data) => {
+    if (!err) {
       res.send({
         message: "here is your product",
         data: data
       })
-    }else{
+    } else {
       res.status(500).send({
-        message:"error"
+        message: "error"
       })
     }
   });
@@ -85,33 +86,33 @@ app.get('/product/:id', (req, res) => {
 
   const id = req.params.id;
 
-  productModel.findOne({_id: id}, (err , data)=> {
-    if(!err) {
+  productModel.findOne({ _id: id }, (err, data) => {
+    if (!err) {
 
-      if(data) {
+      if (data) {
         res.send({
           message: "here is your product",
           data: data
         })
       } else {
         res.status(404).send({
-          message:"product not found",
+          message: "product not found",
         })
       }
-    }else{
+    } else {
       res.status(500).send({
-        message:"server error"
+        message: "server error"
       })
     }
   });
 })
 
-app.put('/product/:id', async ( req, res) => {
+app.put('/product/:id', async (req, res) => {
 
   const body = req.body;
   const id = req.params.id;
 
-  if(
+  if (
     !body.name ||
     !body.price ||
     !body.category ||
@@ -127,70 +128,70 @@ app.put('/product/:id', async ( req, res) => {
     return;
   }
 
-  try{
+  try {
     let data = await productModel.findByIdAndUpdate(
-        id,
-        {
-          name: body.text,
-          price: body.price,
-          category: body.category,
-          description: body.description
-        },
-        {new: true}
-      )
+      id,
+      {
+        name: body.text,
+        price: body.price,
+        category: body.category,
+        description: body.description
+      },
+      { new: true }
+    )
       .exec();
 
-      console.log('updated: ', data);
+    console.log('updated: ', data);
 
-      res.send({
-        message: "product is updated successsfully",
-        data:data
-      })
+    res.send({
+      message: "product is updated successsfully",
+      data: data
+    })
   } catch (error) {
     res.status(500).send({
-      message:"server error"
+      message: "server error"
     })
   }
 })
 
-app.delete('/products', (req , res) => {
+app.delete('/products', (req, res) => {
 
-  productModel.deleteMany({}, (err,data)  => {
-    if(!err) {
+  productModel.deleteMany({}, (err, data) => {
+    if (!err) {
       res.send({
         message: "all products has been deleted successfully",
       })
-    }else {
+    } else {
       res.status(500).send({
-        message:"server error"
+        message: "server error"
       })
     }
   });
 })
 
-app.delete('/product/:id', (req, res)  =>{
+app.delete('/product/:id', (req, res) => {
 
   const id = req.params.id;
 
-    productModel.deleteOne({_id: id}, (err, deletedData)  => {
+  productModel.deleteOne({ _id: id }, (err, deletedData) => {
 
-      console.log ("deleted: ", deletedData);
-      if(!err) {
-        if (deletedData.deletedCount !== 0){
-          res.send ({
-            message: "product has been deleted successfully",
-          })
-        }else {
-          res.send({
-            message: "No product found with this id:" +id,
-          })
-        }
-      }else{
-        res.status(500).send({
-          message: "server error"
-        });
+    console.log("deleted: ", deletedData);
+    if (!err) {
+      if (deletedData.deletedCount !== 0) {
+        res.send({
+          message: "product has been deleted successfully",
+        })
+      } else {
+        res.send({
+          message: "No product found with this id:" + id,
+        })
       }
-    })
+    } else {
+      res.status(500).send({
+        message: "server error"
+      });
+    }
+  })
 })
 
 
@@ -198,8 +199,8 @@ app.delete('/product/:id', (req, res)  =>{
 
 const _dirname = path.resolve();
 
-app.get('/' , express.static(path.join(_dirname, "web")));
-app.use('/' , express.static(path.join(_dirname, "web")));
+app.get('/', express.static(path.join(_dirname, "web")));
+app.use('/', express.static(path.join(_dirname, "web")));
 // app.use('*' , express.static(path.join(_dirname, "web")));
 
 
@@ -211,22 +212,22 @@ let mongodbUri = 'mongodb+srv://dbuser:snadeema@cluster0.intzdzn.mongodb.net/?re
 
 mongoose.connect(mongodbUri);
 
-mongoose.connection.on('connected' , function () {
-    console.log("Mongoose is connected");
+mongoose.connection.on('connected', function () {
+  console.log("Mongoose is connected");
 });
 
-mongoose.connection.on('disconnected' , function (){
+mongoose.connection.on('disconnected', function () {
   console.log("Mongoose is disconnected");
   process.exit(1);
 });
 
-mongoose.connection.on('error' , function (err){
+mongoose.connection.on('error', function (err) {
   console.log('Mongoose connection error:', err);
   process.exit(1);
 })
 
-process.on('SIGINT' , function (){
-  console.log ("app is terminatiing");
+process.on('SIGINT', function () {
+  console.log("app is terminatiing");
   mongoose.connection.close(function () {
     conloge.log('Mongoose default connection closed');
     process.exit(0);

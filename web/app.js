@@ -3,7 +3,7 @@ const url = window.location.href;
 let baseUrl = "";
 
 if (url.split(":")[0] === 'https') {
-    baseUrl = 'https://ill-pink-gorilla-cuff.cyclic.app';
+    baseUrl = 'https://nice-pantyhose-cod.cyclic.app';
 } else {
     baseUrl = 'http://localhost:5001';
 }
@@ -42,7 +42,7 @@ let addProduct = () => {
             console.log(error);
             document.querySelector("#result").innerHTML =
                 error.data.message
-        })
+        });
 
 }
 let getAllProducts = () => {
