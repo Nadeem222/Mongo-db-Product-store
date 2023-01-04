@@ -3,7 +3,7 @@ const url = window.location.href;
 let baseUrl = "";
 
 if (url.split(":")[0] === 'https') {
-    baseUrl = 'https://nice-pantyhose-cod.cyclic.app';
+    baseUrl = 'https://nice-pantyhose-cod.cyclic.app/';
 } else {
     baseUrl = 'http://localhost:5001';
 }
@@ -62,6 +62,7 @@ let getAllProducts = () => {
                         <p>${eachProduct.category} </p>
                         <p>${eachProduct.description} </p>
                         <button onclick="deleteProduct('${eachProduct._id}')">delete </button>
+                        <button onclick="editProduct (${eachProduct._id})">Edit</button> 
                     </div>
                     `
             })
@@ -96,6 +97,39 @@ let deleteProduct = (id) => {
 
 
 }
+let editProduct = async (id) => {
 
+    console.log("edit id: ", id)
+    document.querySelector(`#form-${id}`).style.display = "inline"
+
+    document.querySelector(`#span-${id}`).style.display = "none"
+    document.querySelector(`#delete-${id}`).style.display ="none"
+    document.querySelector(`#edit-${id}`).style.display = "none" 
+}
+
+let updateTodo = async (id) => {
+console.log("update id: ", id)
+
+let updatedText = document.querySelector(`#input-${id}`).value
+
+try {
+let response = await axios.put(`${baseUrl}/todo/${id}`,
+{
+text: updatedText
+})
+
+document.querySelector("#message").innerHTML = response.data.message
+setTimeout(() => {
+document.querySelector("#message").innerHTML = ""
+}, 2000);
+
+getAllTodos();
+
+} catch (error) {
+console.log("error: ", error);
+}
+
+
+}
 
 
