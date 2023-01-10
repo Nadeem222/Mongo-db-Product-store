@@ -107,13 +107,13 @@ let editProduct = async (id) => {
     document.querySelector(`#edit-${id}`).style.display = "none" 
 }
 
-let updateTodo = async (id) => {
+let updateProduct = async (id) => {
 console.log("update id: ", id)
 
 let updatedText = document.querySelector(`#input-${id}`).value
 
 try {
-let response = await axios.put(`${baseUrl}/todo/${id}`,
+let response = await axios.put(`${baseUrl}/product/${id}`,
 {
 text: updatedText
 })
@@ -123,7 +123,7 @@ setTimeout(() => {
 document.querySelector("#message").innerHTML = ""
 }, 2000);
 
-getAllTodos();
+getAllProducts();
 
 } catch (error) {
 console.log("error: ", error);
