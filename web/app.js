@@ -46,7 +46,14 @@ let addProduct = () => {
 
 }
 let getAllProducts = () => {
-    axios.get(`${baseUrl}/products`)
+    axios.get(`${baseUrl}/products`, {
+            // query URL without using browser cache
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache',
+              'Expires': '0',
+            },
+    })
         .then(function (response) {
             // handle success
             console.log("response is success");
@@ -57,10 +64,10 @@ let getAllProducts = () => {
                 document.querySelector("#productList").innerHTML +=
                     `
                     <div>
-                        <h1>${eachProduct.name} </h1>
-                        <p>${eachProduct.price} </p>
-                        <p>${eachProduct.category} </p>
-                        <p>${eachProduct.description} </p>
+                        <h1>Name:${eachProduct.name} </h1>
+                        <p>Price:${eachProduct.price} </p>
+                        <p>Category:${eachProduct.category} </p>
+                        <p>Description:${eachProduct.description} </p>
                         <button onclick="deleteProduct('${eachProduct._id}')">delete </button>
                         <button onclick="editProduct (${eachProduct._id})">Edit</button> 
                     </div>
